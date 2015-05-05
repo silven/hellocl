@@ -1,0 +1,28 @@
+containers:
+  basic:
+    setup:
+    - !Ubuntu trusty
+    - !UbuntuUniverse
+    - !Install [binutils, ocl-icd-libopencl1, libltdl-dev, mesa-common-dev, opencl-headers, clang, make]
+    - !Install [gdb, llvm-dev, libclang-dev, pkg-config, libhwloc-dev]
+    - !TarInstall 
+      url: http://pocl.sourceforge.net/downloads/pocl-0.11.tar.gz
+    - !EnsureDir /etc/OpenCL/vendors
+    - !Sh |
+        cp /usr/etc/OpenCL/vendors/pocl.icd /etc/OpenCL/vendors/pocl.icd
+
+commands:
+  build: !Command
+    description: Run make
+    container: basic
+    run: make
+  
+  run: !Command
+    description: Run make
+    container: basic
+    run: ./hello
+  
+  clean: !Command
+    description: Run make
+    container: basic
+    run: make clean

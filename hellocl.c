@@ -118,8 +118,9 @@ int main(int argc, char** argv)
 	cl_uint num_devices;
 	char deviceName[1024];
 	cl_int err;
-
-	err = clGetPlatformIDs(32, platforms, &num_platforms);
+	
+        err = clGetPlatformIDs(32, platforms, &num_platforms);
+	cl_assert(err, "There was a problem getting the platforms");
 	for(size_t p = 0; p < num_platforms; ++p) {
 		cl_platform_id platform = platforms[p];
 		clGetPlatformInfo (platform, CL_PLATFORM_VENDOR, sizeof(vendor), vendor, NULL);
@@ -207,7 +208,7 @@ int main(int argc, char** argv)
 		clReleaseContext(context);
 	}
 
-	free(a_data);
+        free(a_data);
 	free(b_data);
 	free(c_data);
 
